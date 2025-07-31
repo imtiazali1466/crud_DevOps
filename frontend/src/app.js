@@ -1,34 +1,59 @@
 // frontend/src/App.js
-import React, { useState, useEffect } from 'react'; // Import React and hooks
+import React, { useState, useRef, useEffect } from 'react'; // Import React and hooks
 import axios from 'axios'; // Import Axios for API requests
 
 function App() {
-  // State for storing users fetched from the backend
-  const [users, setUsers] = useState([]);
   // State for the input field to add a new user
   const [name, setName] = useState('');
-
-  // Fetch users when the component mounts
-  useEffect(() => {
-    axios.get('http://localhost:3000/users').then(res => setUsers(res.data));
-  }, []); // Empty array means run once on mount
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const timeoutRef = useRef();
 
   // Add a new user via the API
   const addUser = async () => {
-    const res = await axios.post('http://localhost:3000/users', { name }); // Post new user
-    setUsers([...users, res.data]); // Update users list
+    await axios.post('http://localhost:3000/users', { name }); // Post new user
     setName(''); // Clear input field
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSubmitted(false);
+    if (!name) {
+      setError('error: name required');
+      return;
+    }
+    setLoading(true);
+    timeoutRef.current = setTimeout(async () => {
+      setLoading(false);
+      await addUser(); // Add the user after loading
+      setSubmitted(true);
+    }, 500);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   return (
     <div>
-      <h1>Users</h1>
+      <h1>welcome</h1>
       {/* Input for new user name */}
-      <input value={name} onChange={e => setName(e.target.value)} />
-      {/* Button to add user */}
-      <button onClick={addUser}>Add User</button>
-      {/* List all users */}
-      <ul>{users.map(user => <li key={user.id}>{user.name}</li>)}</ul>
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="enter your name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        {/* Button to add user */}
+        <button type="submit">submit</button>
+      </form>
+      {loading && <div data-testid="loading">Loading...</div>}
+      {error && <div>{error}</div>}
+      {submitted && <div data-testid="submitted">Submitted!</div>}
     </div>
   );
 }

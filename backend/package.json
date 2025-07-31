@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node index.js",
-    "test": "echo 'Add tests here'",
+    "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -11,7 +11,9 @@
     "pg": "^8.7.3"
   },
   "devDependencies": {
-    "eslint": "^8.0.0"
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "supertest": "^6.3.3"
   }
 }
 
