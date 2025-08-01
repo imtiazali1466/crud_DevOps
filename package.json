@@ -1,0 +1,14 @@
+{
+  "name": "crud-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint frontend/src backend/src"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0"
+  }
+}
