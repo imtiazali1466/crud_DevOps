@@ -1,0 +1,28 @@
+# #!/bin/sh
+# . "$(dirname "$0")/_/husky.sh"
+
+# # Run tests in the frontend directory
+# echo "--- Running tests in the frontend directory ---"
+# cd frontend
+# npm test
+
+# # Check the exit code of the previous command
+# # If it failed, exit the script with the same code
+# if [ $? -ne 0 ]; then
+#   echo "Frontend tests failed. Aborting commit."
+#   exit 1
+# fi
+
+# # Run tests in the backend directory
+# echo "--- Running tests in the backend directory ---"
+# cd ../backend
+# npm test
+
+# # Check the exit code of the previous command
+# # If it failed, exit the script with the same code
+# if [ $? -ne 0 ]; then
+#   echo "Backend tests failed. Aborting commit."
+#   exit 1
+# fi
+
+# echo "--- All tests passed. ---"
