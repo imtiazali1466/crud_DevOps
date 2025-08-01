@@ -16,24 +16,43 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [14.x, 16.x]
-                database: [postgres, mysql]
+                service: [frontend, backend]
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+            
+            - name: setup node environment
+              uses: actions/setup-node@v4
+              with:
+                node-version: 16.x
+                cache: 'npm'
+                cache-dependency-path: ${{matrix.service}}/package-lock.json
+            
+            - name: install dependencies
+              run: npm ci
+              working-directory: ${{matrix.service}}
+            
+            - name: test
+              run: npm test
+              working-directory: ${{matrix.service}}
+    lint:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                service: [frontend, backend]
+        needs: install  
         steps:
             - name: checkout code
               uses: actions/checkout@v4
             - name: setup node environment
               uses: actions/setup-node@v4
               with:
-                node-version: ${{matrix.node-version}}
+                node-version: 16.x
                 cache: 'npm'
+                cache-dependency-path: ${{matrix.service}}/package-lock.json
             - name: install dependencies
               run: npm ci
-            - name: test
-              run: npm test
-    lint:
-        needs: install
-        runs-on: ubuntu-latest
-        steps:
+              working-directory: ${{matrix.service}} 
             - name: lint code
               run: npm run lint
-            
+              working-directory: ${{matrix.service}}
