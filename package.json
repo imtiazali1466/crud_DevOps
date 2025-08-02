@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@10.14.0",
+  "pnpm": {
+    "overrides": {
+      "jest": "26.6.0"
+    }
+  },
   "scripts": {
     "lint": "eslint frontend/src backend/."
   },
