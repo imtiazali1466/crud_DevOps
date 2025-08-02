@@ -24,10 +24,13 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 18.x
-                cache: 'pnpm'
+                cache: 'npm'
                 cache-dependency-path: pnpm-lock.yaml
-            - name: Install pnpm globally (alternative)
-              run: npm install -g pnpm
+            - name: setup pnpm
+              uses: pnpm/action-setup@v3
+              with:
+                version: 9
+                run_install: true
             - name: install dependencies
               run: pnpm install --frozen-lockfile
               working-directory: ${{matrix.service}}
@@ -46,8 +49,11 @@ jobs:
                 node-version: 18.x
                 cache: 'pnpm'
                 cache-dependency-path: pnpm-lock.yaml
-            - name: Install pnpm globally (alternative)
-              run: npm install -g pnpm
+            - name: setup pnpm
+              uses: pnpm/action-setup@v3
+              with:
+                version: 9
+                run_install: true
             - name: install dependencies
               run: pnpm install --frozen-lockfile
             - name: lint code
@@ -67,8 +73,11 @@ jobs:
                 node-version: 18.x
                 cache: 'pnpm'
                 cache-dependency-path: pnpm-lock.yaml
-            - name: Install pnpm globally (alternative)
-              run: npm install -g pnpm
+            - name: setup pnpm
+              uses: pnpm/action-setup@v3
+              with:
+                version: 9
+                run_install: true
             - name: install dependencies
               run: pnpm install --frozen-lockfile
               working-directory: ${{matrix.service}}
@@ -91,8 +100,11 @@ jobs:
             node-version: 18.x
             cache: 'pnpm'
             cache-dependency-path: pnpm-lock.yaml
-        - name: Install pnpm globally (alternative)
-          run: npm install -g pnpm
+        - name: setup pnpm
+          uses: pnpm/action-setup@v3
+          with:
+            version: 9
+            run_install: true
         - name: install dependencies
           run: pnpm install --frozen-lockfile
           working-directory: ${{matrix.service}}
