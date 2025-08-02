@@ -27,6 +27,9 @@ jobs:
                 node-version: 18.x
                 cache: 'pnpm'
                 cache-dependency-path: pnpm-lock.yaml
+
+            - name: Enable pnpm with corepack
+              run: corepack enable
             
             - name: install dependencies
               run: pnpm install --frozen-lockfile
@@ -47,6 +50,10 @@ jobs:
                 node-version: 18.x
                 cache: 'pnpm'
                 cache-dependency-path: pnpm-lock.yaml
+
+            - name: Enable pnpm with corepack
+              run: corepack enable
+
             - name: install dependencies
               run: pnpm install --frozen-lockfile
             - name: lint code
@@ -67,6 +74,9 @@ jobs:
                 node-version: 18.x
                 cache: 'pnpm'
                 cache-dependency-path: pnpm-lock.yaml
+
+            - name: Enable pnpm with corepack
+              run: corepack enable
             
             - name: install dependencies
               run: pnpm install --frozen-lockfile
@@ -91,9 +101,14 @@ jobs:
             node-version: 18.x
             cache: 'pnpm'
             cache-dependency-path: pnpm-lock.yaml
+
+        - name: Enable pnpm with corepack
+          run: corepack enable
+
         - name: install dependencies
           run: pnpm install --frozen-lockfile
           working-directory: ${{matrix.service}}
+
         - name: run snyk security scan
           uses: snyk/actions/node@master
           with:
@@ -101,6 +116,7 @@ jobs:
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           continue-on-error: true
+
         - name: run snyk SAST test on ${matrix.service}
           uses: snyk/actions/node@master
           with:
@@ -108,6 +124,7 @@ jobs:
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           continue-on-error: true 
+
         - name: run snyk monitor
           uses: snyk/actions/node@master
           with:
