@@ -51,7 +51,7 @@ jobs:
                 cache: 'npm'
                 cache-dependency-path: ${{matrix.service}}/package-lock.json
             - name: install dependencies
-              run: npm ci
+              run: npm ci & npm install eslint-plugin-react@latest --save-dev
               working-directory: ${{matrix.service}} 
             - name: lint code
               run: npm run lint
