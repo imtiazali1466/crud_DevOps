@@ -4,7 +4,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "npm ci"
   },
   "dependencies": {
     "express": "^4.17.1",

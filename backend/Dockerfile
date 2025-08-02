@@ -24,4 +24,4 @@ RUN npm ci --only=production
 
 COPY . .
 
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
