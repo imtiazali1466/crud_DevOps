@@ -37,9 +37,6 @@ jobs:
               working-directory: ${{matrix.service}}
     lint:
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                service: [frontend, backend]
         # needs: install  
         steps:
             - name: checkout code
@@ -49,13 +46,11 @@ jobs:
               with:
                 node-version: 18.x
                 cache: 'npm'
-                cache-dependency-path: ${{matrix.service}}/package-lock.json
+                cache-dependency-path: 'package-lock.json'
             - name: install dependencies
               run: npm ci 
-              working-directory: ${{matrix.service}} 
             - name: lint code
               run: npm run lint
-              working-directory: ${{matrix.service}}
     build:
         runs-on: ubuntu-latest
         strategy:
