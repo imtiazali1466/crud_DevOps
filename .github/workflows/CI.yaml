@@ -35,33 +35,33 @@ jobs:
             - name: test
               run: npm test
               working-directory: ${{matrix.service}}
-    # lint:
-    #     runs-on: ubuntu-latest
-    #     strategy:
-    #         matrix:
-    #             service: [frontend, backend]
-    #     needs: install  
-    #     steps:
-    #         - name: checkout code
-    #           uses: actions/checkout@v4        
-    #         - name: setup node environment
-    #           uses: actions/setup-node@v4
-    #           with:
-    #             node-version: 16.x
-    #             cache: 'npm'
-    #             cache-dependency-path: ${{matrix.service}}/package-lock.json
-    #         - name: install dependencies
-    #           run: npm ci & npm install eslint-plugin-react@latest --save-dev
-    #           working-directory: ${{matrix.service}} 
-    #         - name: lint code
-    #           run: npm run lint
-    #           working-directory: ${{matrix.service}}
+    lint:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                service: [frontend, backend]
+        # needs: install  
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4        
+            - name: setup node environment
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18.x
+                cache: 'npm'
+                cache-dependency-path: ${{matrix.service}}/package-lock.json
+            - name: install dependencies
+              run: npm ci 
+              working-directory: ${{matrix.service}} 
+            - name: lint code
+              run: npm run lint
+              working-directory: ${{matrix.service}}
     build:
         runs-on: ubuntu-latest
         strategy:
             matrix:
                 service: [frontend, backend]
-        needs: install
+        # needs: lint
         steps:
             - name: checkout code
               uses: actions/checkout@v4
