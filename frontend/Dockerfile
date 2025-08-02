@@ -1,6 +1,6 @@
 # build stage
 
-FROM node:18-alphine AS builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app/frontend
 
