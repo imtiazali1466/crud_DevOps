@@ -47,7 +47,7 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 18.x
-                cache: 'pnpm'
+                cache: 'npm'
                 cache-dependency-path: pnpm-lock.yaml
             - name: setup pnpm
               uses: pnpm/action-setup@v3
@@ -71,7 +71,7 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 18.x
-                cache: 'pnpm'
+                cache: 'npm'
                 cache-dependency-path: pnpm-lock.yaml
             - name: setup pnpm
               uses: pnpm/action-setup@v3
@@ -98,7 +98,7 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: 18.x
-            cache: 'pnpm'
+            cache: 'npm'
             cache-dependency-path: pnpm-lock.yaml
         - name: setup pnpm
           uses: pnpm/action-setup@v3
