@@ -18,14 +18,34 @@ module.exports = {
         es2021: true,
       },
       parserOptions: {
-        // This fixes the 'import/export' parsing error
         sourceType: 'module'
       },
       settings: {
+        // Manually specify the React version to prevent warnings
+        // and false deprecation errors (your project uses React 17)
         react: {
-          version: 'detect',
+          version: '17',
         },
       },
+    },
+    {
+      // New block to configure linting for frontend test files
+      files: ['frontend/src/**/*.test.js', 'frontend/src/**/*.test.jsx'],
+      env: {
+        browser: true,
+        es2021: true,
+        // This tells ESLint that 'describe', 'test', 'expect' etc. are global
+        'jest': true
+      },
+      settings: {
+        react: {
+          version: '17',
+        },
+      },
+      extends: [
+        'eslint:recommended',
+        'plugin:react/recommended',
+      ],
     },
     {
       files: ['backend/**/*.js'],
@@ -38,7 +58,6 @@ module.exports = {
       },
     },
     {
-      // This new block is for your Jest test files in the backend
       files: ['backend/__tests__/**/*.js'],
       extends: [
         'eslint:recommended',
@@ -46,7 +65,6 @@ module.exports = {
       env: {
         node: true,
         es2021: true,
-        // This tells ESLint that 'describe', 'it', 'expect' etc. are global
         'jest': true
       }
     }
