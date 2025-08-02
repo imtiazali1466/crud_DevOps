@@ -28,8 +28,6 @@ jobs:
                 cache-dependency-path: pnpm-lock.yaml
             - name: Install pnpm globally (alternative)
               run: npm install -g pnpm
-            - name: Enable pnpm with corepack
-              run: corepack enable
             - name: install dependencies
               run: pnpm install --frozen-lockfile
               working-directory: ${{matrix.service}}
@@ -50,8 +48,6 @@ jobs:
                 cache-dependency-path: pnpm-lock.yaml
             - name: Install pnpm globally (alternative)
               run: npm install -g pnpm
-            - name: Enable pnpm with corepack
-              run: corepack enable
             - name: install dependencies
               run: pnpm install --frozen-lockfile
             - name: lint code
@@ -73,8 +69,6 @@ jobs:
                 cache-dependency-path: pnpm-lock.yaml
             - name: Install pnpm globally (alternative)
               run: npm install -g pnpm
-            - name: Enable pnpm with corepack
-              run: corepack enable
             - name: install dependencies
               run: pnpm install --frozen-lockfile
               working-directory: ${{matrix.service}}
@@ -99,8 +93,6 @@ jobs:
             cache-dependency-path: pnpm-lock.yaml
         - name: Install pnpm globally (alternative)
           run: npm install -g pnpm
-        - name: Enable pnpm with corepack
-          run: corepack enable
         - name: install dependencies
           run: pnpm install --frozen-lockfile
           working-directory: ${{matrix.service}}
