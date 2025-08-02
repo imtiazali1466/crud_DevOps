@@ -6,8 +6,8 @@ WORKDIR /app
 RUN corepack enable
 
 COPY pnpm-lock.yaml ./
-COPY package.json ./
-COPY backend ./backend/
+COPY package.json .
+COPY backend/package.json ./backend/
 
 RUN pnpm install --frozen-lockfile --shamefully-hoist
 
