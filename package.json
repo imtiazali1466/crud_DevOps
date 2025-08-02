@@ -2,6 +2,7 @@
   "name": "crud-monorepo",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@10.14.0",
   "scripts": {
     "lint": "eslint frontend/src backend/."
   },

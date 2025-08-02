@@ -25,15 +25,15 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 18.x
-                cache: 'npm'
-                cache-dependency-path: ${{matrix.service}}/package-lock.json
+                cache: 'pnpm'
+                cache-dependency-path: pnpm-lock.yaml
             
             - name: install dependencies
-              run: npm ci
+              run: pnpm install --frozen-lockfile
               working-directory: ${{matrix.service}}
             
             - name: test
-              run: npm test
+              run: pnpm test
               working-directory: ${{matrix.service}}
     lint:
         runs-on: ubuntu-latest
@@ -45,12 +45,12 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 18.x
-                cache: 'npm'
-                cache-dependency-path: 'package-lock.json'
+                cache: 'pnpm'
+                cache-dependency-path: pnpm-lock.yaml
             - name: install dependencies
-              run: npm ci 
+              run: pnpm install --frozen-lockfile
             - name: lint code
-              run: npm run lint
+              run: pnpm lint
     build:
         runs-on: ubuntu-latest
         strategy:
@@ -65,15 +65,15 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 18.x
-                cache: 'npm'
-                cache-dependency-path: ${{matrix.service}}/package-lock.json
+                cache: 'pnpm'
+                cache-dependency-path: pnpm-lock.yaml
             
             - name: install dependencies
-              run: npm ci
+              run: pnpm install --frozen-lockfile
               working-directory: ${{matrix.service}}
             
             - name: build code
-              run: npm run build
+              run: pnpm build
               working-directory: ${{matrix.service}}
         
     snyk-security:
@@ -89,10 +89,10 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: 18.x
-            cache: 'npm'
-            cache-dependency-path: 'package-lock.json'
+            cache: 'pnpm'
+            cache-dependency-path: pnpm-lock.yaml
         - name: install dependencies
-          run: npm ci
+          run: pnpm install --frozen-lockfile
           working-directory: ${{matrix.service}}
         - name: run snyk security scan
           uses: snyk/actions/node@master
