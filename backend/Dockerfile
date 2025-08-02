@@ -1,11 +1,14 @@
 # builder stage
 FROM node:18-alpine AS builder
 
-WORKDIR /app
+WORKDIR /app/backend
 
-COPY package*.json ./
+RUN corepack enable
 
-RUN npm ci
+COPY ./pnpm-lock.yaml ../
+COPY ./package.json .
+
+RUN pnpm install --frozen-lockfile --shamefully-hoist
 
 COPY . .
 
@@ -14,14 +17,14 @@ RUN npm run build
 # production stage
 FROM builder AS production
 
-WORKDIR /app
+WORKDIR /app/backend
 
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/backend/build ./build
+COPY --from=builder /app/backend/package*.json ./
+COPY ./pnpm-lock.yaml ../
 
-COPY --from=builder /app/package*.json ./
+RUN pnpm install --frozen-lockfile --prod
 
-RUN npm ci --only=production
+EXPOSE 3000
 
-COPY . .
-
-CMD ["node", "index.js"]
+CMD ["pnpm", "start"]

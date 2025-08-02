@@ -2,11 +2,14 @@
 
 FROM node:18-alphine AS builder
 
-WORKDIR /app
+WORKDIR /app/frontend
 
-COPY package*.json ./
+RUN corepack enable
 
-RUN npm ci
+COPY ./pnpm-lock.yaml ../
+COPY ./package.json .
+
+RUN pnpm install --frozen-lockfile --shamefully-hoist
 
 COPY . .
 
@@ -16,11 +19,14 @@ RUN npm run build
 
 FROM node:18-alpine AS production
 
-WORKDIR /app
+WORKDIR /app/frontend
 
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/frontend/dist ./dist
+COPY --from=builder /app/frontend/package*.json ./
+COPY ./pnpm-lock.yaml ../
 
-RUN npm ci --only=production
+RUN pnpm install --frozen-lockfile --prod
 
-CMD ["npm", "start"]
+EXPOSE 3000
+
+CMD ["pnpm", "start"]
