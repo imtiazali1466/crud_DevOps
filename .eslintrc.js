@@ -5,23 +5,21 @@ module.exports = {
   env: {
     node: true,
   },
-  // You can define a common parser and plugins here
-  // For example, if both services are TypeScript
-  // parser: '@typescript-eslint/parser',
-  // plugins: ['@typescript-eslint'],
 
-  // 'overrides' is the key for a monorepo setup
   overrides: [
     {
       files: ['frontend/**/*.js', 'frontend/**/*.jsx'],
       extends: [
-        // Your frontend-specific configuration (e.g., React)
         'eslint:recommended',
         'plugin:react/recommended',
       ],
       env: {
         browser: true,
         es2021: true,
+      },
+      parserOptions: {
+        // This fixes the 'import/export' parsing error
+        sourceType: 'module'
       },
       settings: {
         react: {
@@ -32,7 +30,6 @@ module.exports = {
     {
       files: ['backend/**/*.js'],
       extends: [
-        // Your backend-specific configuration (e.g., Node.js)
         'eslint:recommended',
       ],
       env: {
@@ -40,5 +37,18 @@ module.exports = {
         es2021: true,
       },
     },
+    {
+      // This new block is for your Jest test files in the backend
+      files: ['backend/__tests__/**/*.js'],
+      extends: [
+        'eslint:recommended',
+      ],
+      env: {
+        node: true,
+        es2021: true,
+        // This tells ESLint that 'describe', 'it', 'expect' etc. are global
+        'jest': true
+      }
+    }
   ],
 };
