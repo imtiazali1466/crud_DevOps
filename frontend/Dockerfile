@@ -2,12 +2,13 @@
 
 FROM node:18-alpine AS builder
 
-WORKDIR /app/frontend
+WORKDIR /app
 
 RUN corepack enable
 
-COPY ./pnpm-lock.yaml ../
-COPY ./package.json .
+COPY pnpm-lock.yaml ./
+COPY package.json .
+COPY frontend/package.json ./frontend/
 
 RUN pnpm install --frozen-lockfile --shamefully-hoist
 
@@ -21,9 +22,9 @@ FROM node:18-alpine AS production
 
 WORKDIR /app/frontend
 
-COPY --from=builder /app/frontend/dist ./dist
-COPY --from=builder /app/frontend/package*.json ./
-COPY ./pnpm-lock.yaml ../
+COPY --from=builder /app/frontend/build ./build
+COPY --from=builder /app/frontend/package.json ./
+COPY pnpm-lock.yaml ./
 
 RUN pnpm install --frozen-lockfile --prod
 
