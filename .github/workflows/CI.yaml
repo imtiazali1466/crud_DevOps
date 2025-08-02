@@ -97,7 +97,7 @@ jobs:
         - name: run snyk security scan
           uses: snyk/actions/node@master
           with:
-            command: snyk test
+            args: threshold=high --sarif-file-output=snyk.sarif
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           continue-on-error: true
@@ -111,7 +111,7 @@ jobs:
         - name: run snyk monitor
           uses: snyk/actions/node@master
           with:
-            command: snyk monitor
+            command: monitor
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           continue-on-error: true
